@@ -30,7 +30,7 @@ export function SetBuilderCard() {
       sets: [{ set: 1, reps: null }],
     },
   })
-  const { fields, append: appendSet } = useFieldArray({
+  const { fields: sets, append: appendSet } = useFieldArray({
     name: "sets",
     control,
   })
@@ -44,7 +44,7 @@ export function SetBuilderCard() {
         <CardContent>
           <ExerciseLookup name="exercise" control={control} className="mb-4" />
           <div className="grid gap-3">
-            {fields.map((field, index) => {
+            {sets.map((field, index) => {
               return (
                 <div key={field.id} className="grid gap-1">
                   <label>Set {index + 1}</label>
@@ -57,7 +57,9 @@ export function SetBuilderCard() {
             })}
             <Button
               type="button"
-              onClick={() => appendSet({ set: fields.length + 1, reps: null })}
+              onClick={() =>
+                appendSet({ set: sets.length + 1, reps: null })
+              }
               className="bg-slate-300 text-slate-600 mt-2"
             >
               Add set
@@ -65,7 +67,9 @@ export function SetBuilderCard() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="ml-auto bg-slate-700">Save</Button>
+          <Button type="submit" className="ml-auto bg-slate-700">
+            Save
+          </Button>
         </CardFooter>
       </Card>
     </form>
