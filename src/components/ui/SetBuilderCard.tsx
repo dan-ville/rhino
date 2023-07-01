@@ -39,15 +39,15 @@ export function SetBuilderCard() {
 
   return (
     <form onSubmit={handleSubmit((data) => console.log(data))}>
-      <Card>
+      <Card className="max-w-md">
         <CardHeader>New Excercise</CardHeader>
         <CardContent>
-          <ExerciseLookup name="exercise" control={control} className="mb-6" />
-          <div className="grid gap-2">
+          <ExerciseLookup name="exercise" control={control} className="mb-4" />
+          <div className="grid gap-3">
             {fields.map((field, index) => {
               return (
-                <div key={field.id}>
-                  <label className="mb-3">Set {index + 1}</label>
+                <div key={field.id} className="grid gap-1">
+                  <label>Set {index + 1}</label>
                   <Input
                     placeholder="Reps"
                     {...register(`sets.${index}.reps`, { valueAsNumber: true })}
@@ -58,14 +58,14 @@ export function SetBuilderCard() {
             <Button
               type="button"
               onClick={() => appendSet({ set: fields.length + 1, reps: null })}
-              className="bg-slate-300 text-slate-600"
+              className="bg-slate-300 text-slate-600 mt-2"
             >
               Add set
             </Button>
           </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="float-right bg-slate-700">Save</Button>
+          <Button type="submit" className="ml-auto bg-slate-700">Save</Button>
         </CardFooter>
       </Card>
     </form>
