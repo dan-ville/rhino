@@ -39,7 +39,7 @@ export function SetBuilderCard() {
 
   return (
     <form onSubmit={handleSubmit((data) => console.log(data))}>
-      <Card className="max-w-md">
+      <Card className="max-w-md bg-slate-50">
         <CardHeader>New Excercise</CardHeader>
         <CardContent>
           <ExerciseLookup name="exercise" control={control} className="mb-4" />
