@@ -1,4 +1,4 @@
-import { Page, SetBuilderCard } from "@/components"
+import { Page } from "@/components"
 import { Workout } from "@/components/Workout"
 
 export default function Home() {

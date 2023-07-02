@@ -2,8 +2,9 @@
 
 import { useCallback, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
+import { getStoredWorkouts } from "../utils"
 
-export function useWorkout( id = undefined) {
+export function useWorkout(id = undefined) {
   const newId = uuidv4()
   const workoutId = id || newId
 
@@ -17,10 +18,7 @@ export function useWorkout( id = undefined) {
   )
 
   const saveWorkout = useCallback(() => {
-    const storedWorkoutsJSON = localStorage.getItem("workouts")
-    const storedWorkouts = storedWorkoutsJSON
-      ? JSON.parse(storedWorkoutsJSON)
-      : {}
+    const storedWorkouts = getStoredWorkouts()
 
     const newWorkouts = storedWorkouts.workouts
       ? [...storedWorkouts.workouts, workout]

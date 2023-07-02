@@ -23,5 +23,6 @@ type Exercise = {
 }
 
 type Workout = {
+  id: string
   exercises: Exercise[]
 }
