@@ -12,7 +12,7 @@ export function Workout() {
   const [editingId, setEditingId] = useState<string | null>(null)
 
   return (
-    <div className="flex gap-6">
+    <div className="flex gap-6 flex-col">
       <div className={styles["new-exercise-card"]}>
         <SetBuilderCard saveExerciseToWorkout={saveExerciseToWorkout} />
       </div>

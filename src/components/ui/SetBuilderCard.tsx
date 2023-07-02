@@ -4,7 +4,7 @@ import { Input } from "./input"
 import { ExerciseLookup } from "../forms/ExerciseLookup"
 import { useFieldArray, useForm } from "react-hook-form"
 import { Button } from "./button"
-import { useId, useState } from "react"
+import { useId } from "react"
 import {
   Select,
   SelectContent,
@@ -42,32 +42,15 @@ export function SetBuilderCard({ saveExerciseToWorkout }: SetBuilderCardProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Card className="bg-slate-50">
-        {/* <CardHeader>
-          <p>New Excercise</p>
-        </CardHeader> */}
-        <CardContent className="mt-6">
-          <div className="flex content-center justify-between gap-3">
-            <div className="w-full">
-              <ExerciseLookup
-                name="exercise"
-                control={control}
-                className="mb-4"
-              />
-            </div>
-            <div className="w-10px">
-              <Select
-                onValueChange={(value) => setValue("units", value as Unit)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={watch("units")} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="lbs">lbs</SelectItem>
-                  <SelectItem value="kg">kg</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+        <CardHeader>
+          <div className="w-full">
+            <ExerciseLookup
+              name="exercise"
+              control={control}
+            />
           </div>
+        </CardHeader>
+        <CardContent>
           <div className="grid gap-3">
             {sets.map((field, index) => {
               return (
@@ -102,6 +85,17 @@ export function SetBuilderCard({ saveExerciseToWorkout }: SetBuilderCardProps) {
           </div>
         </CardContent>
         <CardFooter>
+          <div className="w-10px">
+            <Select onValueChange={(value) => setValue("units", value as Unit)}>
+              <SelectTrigger>
+                <SelectValue placeholder={watch("units")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="lbs">lbs</SelectItem>
+                <SelectItem value="kg">kg</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <Button type="submit" className="ml-auto bg-slate-700">
             Save
           </Button>

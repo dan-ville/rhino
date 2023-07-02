@@ -2,11 +2,17 @@
 
 import { useCallback, useId, useState } from "react"
 
-export function useWorkout() {
-  const [workout, setWorkout] = useState<Workout>({
-    exercises: [],
-  })
-  const id = useId()
+export function useWorkout( id = undefined) {
+  const newId = useId()
+  const workoutId = id || newId
+
+  const [workout, setWorkout] = useState<Workout>(
+    localStorage.getItem(`workout-${workoutId}`)
+      ? JSON.parse(localStorage.getItem(`workout-${workoutId}`)!)
+      : {
+          exercises: [],
+        }
+  )
 
   const saveWorkout = useCallback(() => {
     localStorage.setItem(`workout-${id}`, JSON.stringify(workout))
