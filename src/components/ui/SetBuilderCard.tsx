@@ -4,7 +4,7 @@ import { Input } from "./input"
 import { ExerciseLookup } from "../forms/ExerciseLookup"
 import { useFieldArray, useForm } from "react-hook-form"
 import { Button } from "./button"
-import { useId } from "react"
+import { v4 as uuidv4 } from "uuid"
 import {
   Select,
   SelectContent,
@@ -18,9 +18,9 @@ type SetBuilderCardProps = {
 }
 
 export function SetBuilderCard({ saveExerciseToWorkout }: SetBuilderCardProps) {
-  const id = useId()
+  const id = uuidv4()
 
-  const { control, register, handleSubmit, reset, watch, setValue } =
+  const { control, register, handleSubmit, reset, watch, setValue, setFocus } =
     useForm<Exercise>({
       defaultValues: {
         id,
@@ -37,6 +37,7 @@ export function SetBuilderCard({ saveExerciseToWorkout }: SetBuilderCardProps) {
   const onSubmit = (data: Exercise) => {
     saveExerciseToWorkout(data)
     reset()
+    setFocus("exercise")
   }
 
   return (
