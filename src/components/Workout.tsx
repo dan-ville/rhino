@@ -10,7 +10,7 @@ export function Workout() {
   return (
     <div>
       <SetBuilderCard saveExerciseToWorkout={saveExerciseToWorkout} />
-      {JSON.stringify(workout, null, 2)}
+      
     </div>
   )
 }

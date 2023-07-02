@@ -10,6 +10,8 @@ type ExerciseAPIData = {
 type ExerciseSet = {
   set: number | null
   reps: number | null
+  weight: number | null
+  rpe?: number | null
 }
 
 type Exercise = {
