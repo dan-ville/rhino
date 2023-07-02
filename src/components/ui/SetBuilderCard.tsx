@@ -5,28 +5,14 @@ import { ExerciseLookup } from "../forms/ExerciseLookup"
 import { useFieldArray, useForm } from "react-hook-form"
 import { Button } from "./button"
 
-type Exercise = {
-  name: string
-  type: string
-  muscle: string
-  equipment: string
-  difficulty: string
-  instructions: string
-} | null
-
-type ExerciseSet = {
-  set: number | null
-  reps: number | null
+type SetBuilderCardProps = {
+  saveExerciseToWorkout: (exercise: Exercise) => void
 }
 
-type FormValues = {
-  exercise: Exercise | null
-  sets: ExerciseSet[]
-}
-
-export function SetBuilderCard() {
-  const { control, watch, register, handleSubmit } = useForm<FormValues>({
+export function SetBuilderCard({ saveExerciseToWorkout }: SetBuilderCardProps) {
+  const { control, watch, register, handleSubmit } = useForm<Exercise>({
     defaultValues: {
+      exercise: null,
       sets: [{ set: 1, reps: null }],
     },
   })
@@ -37,8 +23,12 @@ export function SetBuilderCard() {
 
   console.log(watch())
 
+  const onSubmit = (data: Exercise) => {
+    saveExerciseToWorkout(data)
+  }
+
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Card className="max-w-md bg-slate-50">
         <CardHeader>New Excercise</CardHeader>
         <CardContent>
@@ -57,9 +47,7 @@ export function SetBuilderCard() {
             })}
             <Button
               type="button"
-              onClick={() =>
-                appendSet({ set: sets.length + 1, reps: null })
-              }
+              onClick={() => appendSet({ set: sets.length + 1, reps: null })}
               className="bg-slate-300 text-slate-600 mt-2"
             >
               Add set
