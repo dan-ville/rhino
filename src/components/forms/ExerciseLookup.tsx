@@ -49,6 +49,7 @@ export const ExerciseLookup = <
             {...field}
             {...selectProps}
             loadOptions={loadExerciseOptions}
+            placeholder="Select exercise"
             getOptionLabel={(opt: Exercise) => opt.name}
             getOptionValue={(opt: Exercise) => opt.name}
           />

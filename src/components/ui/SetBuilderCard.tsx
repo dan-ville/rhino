@@ -4,24 +4,35 @@ import { Input } from "./input"
 import { ExerciseLookup } from "../forms/ExerciseLookup"
 import { useFieldArray, useForm } from "react-hook-form"
 import { Button } from "./button"
+import { useId, useState } from "react"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./select"
 
 type SetBuilderCardProps = {
   saveExerciseToWorkout: (exercise: Exercise) => void
 }
 
 export function SetBuilderCard({ saveExerciseToWorkout }: SetBuilderCardProps) {
-  const { control, watch, register, handleSubmit, reset } = useForm<Exercise>({
-    defaultValues: {
-      exercise: null,
-      sets: [{ set: 1, reps: null }],
-    },
-  })
+  const id = useId()
+
+  const { control, register, handleSubmit, reset, watch, setValue } =
+    useForm<Exercise>({
+      defaultValues: {
+        id,
+        exercise: null,
+        sets: [{ set: 1, reps: null }],
+        units: "lbs",
+      },
+    })
   const { fields: sets, append: appendSet } = useFieldArray({
     name: "sets",
     control,
   })
-
-  console.log(watch())
 
   const onSubmit = (data: Exercise) => {
     saveExerciseToWorkout(data)
@@ -30,10 +41,33 @@ export function SetBuilderCard({ saveExerciseToWorkout }: SetBuilderCardProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Card className="max-w-md bg-slate-50">
-        <CardHeader>New Excercise</CardHeader>
-        <CardContent>
-          <ExerciseLookup name="exercise" control={control} className="mb-4" />
+      <Card className="bg-slate-50">
+        {/* <CardHeader>
+          <p>New Excercise</p>
+        </CardHeader> */}
+        <CardContent className="mt-6">
+          <div className="flex content-center justify-between gap-3">
+            <div className="w-full">
+              <ExerciseLookup
+                name="exercise"
+                control={control}
+                className="mb-4"
+              />
+            </div>
+            <div className="w-10px">
+              <Select
+                onValueChange={(value) => setValue("units", value as Unit)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={watch("units")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="lbs">lbs</SelectItem>
+                  <SelectItem value="kg">kg</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           <div className="grid gap-3">
             {sets.map((field, index) => {
               return (

@@ -14,9 +14,12 @@ type ExerciseSet = {
   rpe?: number | null
 }
 
+type Unit = "kg" | "lbs"
 type Exercise = {
+  id: string
   exercise: ExerciseAPIData | null
   sets: ExerciseSet[]
+  units: Unit
 }
 
 type Workout = {

@@ -1,0 +1,12 @@
+.new-exercise-card {
+    width: 100%;
+    min-width: 400px;
+    max-width: 400px;
+}
+
+.display-cards {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.75rem;
+}
