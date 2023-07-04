@@ -1,7 +1,7 @@
 import { Page } from "@/components"
 import { Workout } from "@/components/Workout"
 
-export default function Home() {
+export default async function Home() {
   return (
     <main>
       <Page>

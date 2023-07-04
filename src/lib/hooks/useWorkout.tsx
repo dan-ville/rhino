@@ -2,30 +2,19 @@
 
 import { useCallback, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
-import { getStoredWorkouts } from "../utils"
+import { useWorkoutsDB } from "./useWorkoutsDB"
 
 export function useWorkout(id = undefined) {
   const newId = uuidv4()
   const workoutId = id || newId
+  const { storedWorkouts, saveWorkout } = useWorkoutsDB()
 
   const [workout, setWorkout] = useState<Workout>(
-    localStorage.getItem(`workout-${workoutId}`)
-      ? JSON.parse(localStorage.getItem(`workout-${workoutId}`)!)
-      : {
-          id: workoutId,
-          exercises: [],
-        }
+    storedWorkouts.workouts.find((workout) => workout.id === workoutId) || {
+      id: workoutId,
+      exercises: [],
+    }
   )
-
-  const saveWorkout = useCallback(() => {
-    const storedWorkouts = getStoredWorkouts()
-
-    const newWorkouts = storedWorkouts.workouts
-      ? [...storedWorkouts.workouts, workout]
-      : [workout]
-
-    localStorage.setItem("workouts", JSON.stringify({ workouts: newWorkouts }))
-  }, [workout])
 
   const saveExerciseToWorkout = useCallback((exercise: Exercise) => {
     setWorkout((workout) => ({

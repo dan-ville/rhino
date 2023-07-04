@@ -1,10 +1,11 @@
 'use client'
+
 import { Page, SetDisplayCard } from "@/components"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { getStoredWorkouts } from "@/lib/utils"
+import { useWorkoutsDB } from "@/lib/hooks"
 
 export default function MyWorkoutsPage() {
-  const storedWorkouts = getStoredWorkouts()
+  const { storedWorkouts } = useWorkoutsDB()
 
   return (
     <main>

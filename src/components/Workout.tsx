@@ -28,7 +28,10 @@ export function Workout() {
             })}
           </CardContent>
           <CardFooter>
-            <Button className="ml-auto bg-slate-700" onClick={saveWorkout}>
+            <Button
+              className="ml-auto bg-slate-700"
+              onClick={() => saveWorkout(workout)}
+            >
               Save Workout
             </Button>
           </CardFooter>
