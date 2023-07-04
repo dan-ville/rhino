@@ -12,10 +12,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./select"
+import { Label } from "./label"
 
 type SetBuilderCardProps = {
   saveExerciseToWorkout: (exercise: Exercise) => void
 }
+
+const FormItem = ({ children }: { children: React.ReactNode }) => (
+  <div className="grid w-full max-w-sm items-center gap-1.5">{children}</div>
+)
 
 export function SetBuilderCard({ saveExerciseToWorkout }: SetBuilderCardProps) {
   const id = uuidv4()
@@ -45,10 +50,7 @@ export function SetBuilderCard({ saveExerciseToWorkout }: SetBuilderCardProps) {
       <Card className="bg-slate-50">
         <CardHeader>
           <div className="w-full">
-            <ExerciseLookup
-              name="exercise"
-              control={control}
-            />
+            <ExerciseLookup name="exercise" control={control} />
           </div>
         </CardHeader>
         <CardContent>
@@ -58,18 +60,26 @@ export function SetBuilderCard({ saveExerciseToWorkout }: SetBuilderCardProps) {
                 <div key={field.id} className="grid gap-1 ">
                   <label>Set {index + 1}</label>
                   <div className="grid gap-2 grid-cols-2">
-                    <Input
-                      placeholder="Reps"
-                      {...register(`sets.${index}.reps`, {
-                        valueAsNumber: true,
-                      })}
-                    />
-                    <Input
-                      placeholder="Weight"
-                      {...register(`sets.${index}.weight`, {
-                        valueAsNumber: true,
-                      })}
-                    />
+                    <FormItem>
+                      <Label htmlFor={`sets.${index}.reps`}>Reps</Label>
+                      <Input
+                        placeholder="Reps"
+                        {...register(`sets.${index}.reps`, {
+                          valueAsNumber: true,
+                        })}
+                        required
+                      />
+                    </FormItem>
+                    <FormItem>
+                      <Label htmlFor={`sets.${index}.weight`}>Weight</Label>
+                      <Input
+                        placeholder="Weight"
+                        {...register(`sets.${index}.weight`, {
+                          valueAsNumber: true,
+                        })}
+                        required
+                      />
+                    </FormItem>
                   </div>
                 </div>
               )
