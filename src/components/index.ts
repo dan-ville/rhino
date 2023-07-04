@@ -8,3 +8,4 @@ export * from "./ui/SetDisplayCard"
 
 // APP
 export * from "./Workout"
+export * from './WorkoutGrid'
