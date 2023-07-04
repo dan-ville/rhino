@@ -6,11 +6,24 @@ import { SetDisplayCard } from "./ui/SetDisplayCard"
 import { useState } from "react"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card"
+import { useForm } from "react-hook-form"
+import { Input } from "./ui/input"
 
 export function Workout() {
-  const { workout, saveWorkout, saveExerciseToWorkout } =
-    useWorkout()
+  const { workout, saveWorkout, saveExerciseToWorkout } = useWorkout()
   const [editingId, setEditingId] = useState<string | null>(null)
+  const { register, watch, handleSubmit } = useForm({
+    defaultValues: workout,
+  })
+
+  const handleSaveWorkout = () => {
+    handleSubmit((data) => {
+      saveWorkout({
+        ...workout,
+        ...data,
+      })
+    })
+  }
 
   return (
     <div className="flex gap-6 flex-col">
@@ -20,7 +33,15 @@ export function Workout() {
       {workout.exercises.length ? (
         <Card className="bg-slate-200">
           <CardHeader>
-            <h2 className="text-2xl text-slate-800 font-semibold">WORKOUT</h2>
+            <Input
+              className="text-xl text-slate-800 font-semibold bg-slate-200"
+              {...register("name")}
+            />
+            <Input
+              type="date"
+              {...register("dateCreated")}
+              className="text-slate-800 bg-slate-200"
+            />
           </CardHeader>
           <CardContent>
             {workout.exercises.map((exercise) => {
@@ -30,7 +51,7 @@ export function Workout() {
           <CardFooter>
             <Button
               className="ml-auto bg-slate-700"
-              onClick={() => saveWorkout(workout)}
+              onClick={() => handleSaveWorkout()}
             >
               Save Workout
             </Button>

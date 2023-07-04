@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { useWorkoutsDB } from "./useWorkoutsDB"
+import { getWorkoutTimeOfDay } from "../utils"
 
 export function useWorkout(id = undefined) {
   const newId = uuidv4()
@@ -13,6 +14,8 @@ export function useWorkout(id = undefined) {
     storedWorkouts.workouts.find((workout) => workout.id === workoutId) || {
       id: workoutId,
       exercises: [],
+      dateCreated: new Date().toISOString().slice(0, 10),
+      name: getWorkoutTimeOfDay(),
     }
   )
 

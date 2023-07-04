@@ -24,5 +24,7 @@ type Exercise = {
 
 type Workout = {
   id: string
+  name: string
+  dateCreated: string
   exercises: Exercise[]
 }
