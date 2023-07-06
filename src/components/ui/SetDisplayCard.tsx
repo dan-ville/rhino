@@ -13,16 +13,18 @@ export function SetDisplayCard({ exercise }: SetBuilderCardProps) {
       </CardHeader>
       <CardContent>
         <div className="grid gap-3">
-          {exercise.sets.map((set, index) => {
-            return (
-              <div key={set.set} className="grid gap-1">
-                <p>
-                  <span className="font-medium">Set {index + 1}</span>:{" "}
-                  {set.reps} x {set.weight} {exercise.units}
-                </p>
-              </div>
-            )
-          })}
+          {exercise.sets?.length
+            ? exercise.sets.map((set, index) => {
+                return (
+                  <div key={set.id} className="grid gap-1">
+                    <p>
+                      <span className="font-medium">Set {index + 1}</span>:{" "}
+                      {set.reps} x {set.weight} {exercise.units}
+                    </p>
+                  </div>
+                )
+              })
+            : null}
         </div>
       </CardContent>
       <CardFooter></CardFooter>

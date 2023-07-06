@@ -2,7 +2,7 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Input } from "./input"
 import { ExerciseLookup } from "../forms/ExerciseLookup"
-import { useFieldArray, useForm, useFormContext } from "react-hook-form"
+import { useFieldArray, useFormContext } from "react-hook-form"
 import { Button } from "./button"
 import { v4 as uuidv4 } from "uuid"
 import {

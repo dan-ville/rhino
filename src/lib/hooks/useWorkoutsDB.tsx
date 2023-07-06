@@ -9,6 +9,7 @@ export function useWorkoutsDB() {
   )
 
   useEffect(() => {
+    // set storedWorkouts from only after component has mounted, as getStoredWorkouts depends on localStorage which is not available on the server
     if (typeof window === undefined) return
     const data = getStoredWorkouts()
     setStoredWorkouts(data)
