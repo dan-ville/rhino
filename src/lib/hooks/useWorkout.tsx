@@ -19,11 +19,30 @@ export function useWorkout(id = undefined) {
     }
   )
 
-  const saveExerciseToWorkout = useCallback((exercise: Exercise) => {
-    setWorkout((workout) => ({
-      ...workout,
-      exercises: [...workout.exercises, exercise],
-    }))
+  const saveExerciseToWorkout = useCallback((newExercise: Exercise) => {
+    setWorkout((workout) => {
+      const exerciseIndex = workout.exercises.findIndex(
+        (exercise) => exercise.id === newExercise.id
+      )
+
+      if (exerciseIndex === -1) {
+        // exercise id not found, add the new exercise to the array
+        return {
+          ...workout,
+          exercises: [...workout.exercises, newExercise],
+        }
+      } else {
+        // exercise id found, update the existing exercise
+        const updatedExercises = workout.exercises.map((exercise, index) =>
+          index === exerciseIndex ? newExercise : exercise
+        )
+
+        return {
+          ...workout,
+          exercises: updatedExercises,
+        }
+      }
+    })
   }, [])
 
   return {

@@ -1,36 +1,54 @@
 "use client"
 
-import { useWorkout } from "@/lib/hooks"
+import { useWorkoutsDB } from "@/lib/hooks"
 import { SetBuilderCard } from "./ui/SetBuilderCard"
-import { SetDisplayCard } from "./ui/SetDisplayCard"
 import { useState } from "react"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card"
-import { useForm } from "react-hook-form"
+import { useForm, FormProvider, useFieldArray } from "react-hook-form"
 import { Input } from "./ui/input"
+import { v4 as uuidv4 } from "uuid"
+import { getWorkoutTimeOfDay } from "@/lib/utils"
 
 export function Workout() {
-  const { workout, saveWorkout, saveExerciseToWorkout } = useWorkout()
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const { register, watch, handleSubmit } = useForm({
-    defaultValues: workout,
+  const { saveWorkout } = useWorkoutsDB()
+  const [isEditing, setIsEditing] = useState(false)
+  const formMethods = useForm<Workout>({
+    defaultValues: {
+      id: uuidv4(),
+      exercises: [
+        {
+          id: uuidv4(),
+          units: "lbs",
+          sets: [{ id: uuidv4(), reps: null, weight: null }],
+          exercise: undefined,
+        },
+      ],
+      dateCreated: new Date().toISOString().slice(0, 10),
+      name: getWorkoutTimeOfDay(),
+    },
+  })
+  const { register, control } = formMethods
+  const { fields: exercises, append: appendExercise } = useFieldArray({
+    name: "exercises",
+    control: control,
   })
 
-  const handleSaveWorkout = () => {
-    handleSubmit((data) => {
-      saveWorkout({
-        ...workout,
-        ...data,
-      })
+  const handleAppendExercise = () => {
+    appendExercise({
+      id: uuidv4(),
+      units: "lbs",
+      sets: [{ id: uuidv4(), reps: null, weight: null }],
+      exercise: undefined,
     })
   }
 
   return (
-    <div className="flex gap-6 flex-col">
-      <div className="max-w-xl mx-auto">
-        <SetBuilderCard saveExerciseToWorkout={saveExerciseToWorkout} />
-      </div>
-      {workout.exercises.length ? (
+    <form
+      className="flex gap-6 flex-col"
+      onSubmit={formMethods.handleSubmit(saveWorkout)}
+    >
+      <FormProvider {...formMethods}>
         <Card className="bg-slate-200">
           <CardHeader>
             <Input
@@ -44,20 +62,33 @@ export function Workout() {
             />
           </CardHeader>
           <CardContent>
-            {workout.exercises.map((exercise) => {
-              return <SetDisplayCard key={exercise.id} exercise={exercise} />
-            })}
-          </CardContent>
-          <CardFooter>
+            <div className="grid gap-2 mb-3">
+              {exercises.map((exercise, index) => {
+                return (
+                  <SetBuilderCard key={exercise.id} exerciseIndex={index} />
+                )
+              })}
+            </div>
             <Button
-              className="ml-auto bg-slate-700"
-              onClick={() => handleSaveWorkout()}
+              className="bg-slate-200 border border-dashed border-slate-400 text-slate-700 w-full hover:bg-slate-100"
+              onClick={handleAppendExercise}
             >
+              Add Exercise
+            </Button>
+          </CardContent>
+          <CardFooter className="gap-2">
+            <Button
+              onClick={() => setIsEditing(!isEditing)}
+              className="ml-auto bg-slate-200 border border-solid border-slate-700 text-slate-700"
+            >
+              Edit
+            </Button>
+            <Button className="bg-slate-700" type="submit">
               Save Workout
             </Button>
           </CardFooter>
         </Card>
-      ) : null}
-    </div>
+      </FormProvider>
+    </form>
   )
 }

@@ -8,17 +8,17 @@ type ExerciseAPIData = {
 }
 
 type ExerciseSet = {
-  set: number | null
   reps: number | null
   weight: number | null
   rpe?: number | null
+  id: string
 }
 
 type Unit = "kg" | "lbs"
 type Exercise = {
   id: string
-  exercise: ExerciseAPIData | null
-  sets: ExerciseSet[]
+  exercise?: ExerciseAPIData
+  sets?: ExerciseSet[]
   units: Unit
 }
 
