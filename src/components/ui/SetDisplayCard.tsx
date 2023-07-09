@@ -1,33 +1,39 @@
 "use client"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 type SetBuilderCardProps = {
   exercise: Exercise
+  workout: Workout
 }
 
-export function SetDisplayCard({ exercise }: SetBuilderCardProps) {
-  return (
-    <Card className="max-w-md bg-slate-50 h-max">
-      <CardHeader>
-        <p className="font-semibold">{exercise.exercise?.name}</p>
-      </CardHeader>
-      <CardContent>
-        <div className="grid gap-3">
-          {exercise.sets?.length
-            ? exercise.sets.map((set, index) => {
-                return (
-                  <div key={set.id} className="grid gap-1">
-                    <p>
-                      <span className="font-medium">Set {index + 1}</span>:{" "}
-                      {set.reps} x {set.weight} {exercise.units}
-                    </p>
-                  </div>
-                )
-              })
-            : null}
-        </div>
-      </CardContent>
-      <CardFooter></CardFooter>
-    </Card>
-  )
+export function SetDisplayCard({ exercise, workout }: SetBuilderCardProps) {
+  return exercise.sets?.length ? (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Set</TableHead>
+          <TableHead>Reps</TableHead>
+          <TableHead>Weight</TableHead>
+          <TableHead>Units</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {exercise.sets?.map((set, i) => (
+          <TableRow key={set.id}>
+            <TableCell>{i}</TableCell>
+            <TableCell>{set.reps}</TableCell>
+            <TableCell>{set.weight}</TableCell>
+            <TableCell>{exercise.units}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  ) : null
 }

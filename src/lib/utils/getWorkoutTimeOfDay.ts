@@ -1,7 +1,7 @@
 import { getHours } from "date-fns"
 
-export function getWorkoutTimeOfDay() {
-  let currentDate = new Date()
+export function getWorkoutTimeOfDay(dateString?: string) {
+  let currentDate = dateString ? new Date(dateString) : new Date()
   const currentHour = getHours(currentDate)
 
   if (currentHour >= 0 && currentHour < 12) {

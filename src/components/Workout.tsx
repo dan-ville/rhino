@@ -13,6 +13,7 @@ import { getWorkoutTimeOfDay } from "@/lib/utils"
 export function Workout() {
   const { saveWorkout } = useWorkoutsDB()
   const [isEditing, setIsEditing] = useState(false)
+  
   const formMethods = useForm<Workout>({
     defaultValues: {
       id: uuidv4(),
