@@ -14,9 +14,10 @@ import {
 import { Input } from "./ui/input"
 import { v4 as uuidv4 } from "uuid"
 import { getWorkoutTimeOfDay } from "@/lib/utils"
+import { WorkoutType } from "@/lib/types"
 
 type Props = {
-  workout?: Workout
+  workout?: WorkoutType
 }
 
 export function Workout({ workout }: Props) {
@@ -25,7 +26,7 @@ export function Workout({ workout }: Props) {
   const { saveWorkout } = useWorkoutsDB()
   const [isEditing, setIsEditing] = useState(false)
 
-  const form = useForm<Workout>({
+  const form = useForm<WorkoutType>({
     defaultValues: {
       id: uuidv4(),
       exercises: [
@@ -36,7 +37,7 @@ export function Workout({ workout }: Props) {
           exercise: undefined,
         },
       ],
-      dateCreated: new Date().toISOString().slice(0, 10),
+      createdTime: new Date().toUTCString(),
       name: getWorkoutTimeOfDay(),
     },
   })
@@ -64,7 +65,7 @@ export function Workout({ workout }: Props) {
     })
   }
 
-  const onSubmitSuccess: SubmitHandler<Workout> = (data) => {
+  const onSubmitSuccess: SubmitHandler<WorkoutType> = (data) => {
     saveWorkout(data, params.id)
     // If already on a Workout page, exit early
     if ("id" in params) return
@@ -85,11 +86,6 @@ export function Workout({ workout }: Props) {
             <Input
               className="text-xl text-slate-800 font-semibold bg-slate-200"
               {...register("name")}
-            />
-            <Input
-              type="date"
-              {...register("dateCreated")}
-              className="text-slate-800 bg-slate-200"
             />
           </CardHeader>
           <CardContent>

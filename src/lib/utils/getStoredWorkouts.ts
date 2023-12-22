@@ -1,4 +1,6 @@
-export function getStoredWorkouts(): { workouts: Workout[] } {
+import { WorkoutType } from "../types"
+
+export function getStoredWorkouts(): { workouts: WorkoutType[] } {
   const storedWorkoutsJSON = localStorage.getItem("workouts")
   const storedWorkouts = storedWorkoutsJSON
     ? JSON.parse(storedWorkoutsJSON)

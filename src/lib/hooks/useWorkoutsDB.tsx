@@ -1,47 +1,55 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
-import { getStoredWorkouts } from "../utils"
+import { useCallback } from "react"
 
+import { WorkoutType } from "../types"
+import { useAppContext } from "@/components/AppContext"
+
+// TODO: Convert this to a singleton function/class outside of react lifecycle
 export function useWorkoutsDB() {
-  const [storedWorkouts, setStoredWorkouts] = useState<{ workouts: Workout[] }>(
-    { workouts: [] }
+  const { workouts, setWorkouts } = useAppContext()
+
+  const saveWorkout = useCallback(
+    (workout: WorkoutType, id?: string) => {
+      if (typeof window === "undefined") return
+
+      let updatedWorkouts = workouts
+      const workoutIndex = updatedWorkouts.findIndex((w) => w.id === id)
+
+      if (workoutIndex !== -1) {
+        // Update existing workout
+        updatedWorkouts[workoutIndex] = workout
+      } else {
+        // Add new workout
+        updatedWorkouts = [...updatedWorkouts, workout]
+      }
+
+      localStorage.setItem(
+        "workouts",
+        JSON.stringify({ workouts: updatedWorkouts })
+      )
+      setWorkouts(updatedWorkouts)
+    },
+    [workouts, setWorkouts]
   )
-
-  useEffect(() => {
-    // set storedWorkouts from only after component has mounted, as getStoredWorkouts depends on localStorage which is not available on the server
-    if (typeof window === undefined) return
-    const data = getStoredWorkouts()
-    setStoredWorkouts(data)
-  }, [])
-
-const saveWorkout = useCallback(
-  (workout: Workout, id?: string) => {
-    if (typeof window === "undefined") return
-
-    let updatedWorkouts = storedWorkouts.workouts
-    const workoutIndex = updatedWorkouts.findIndex((w) => w.id === id)
-
-    if (workoutIndex !== -1) {
-      // Update existing workout
-      updatedWorkouts[workoutIndex] = workout
-    } else {
-      // Add new workout
-      updatedWorkouts = [...updatedWorkouts, workout]
-    }
-
-    localStorage.setItem(
-      "workouts",
-      JSON.stringify({ workouts: updatedWorkouts })
-    )
-  },
-  [storedWorkouts.workouts]
-)
 
   const getWorkoutById = useCallback(
-    (id: string) => storedWorkouts.workouts.find((w) => w.id === id),
-    [storedWorkouts.workouts]
+    (id: string) => workouts.find((w) => w.id === id),
+    [workouts]
   )
 
-  return { storedWorkouts, saveWorkout, getWorkoutById }
+  const deleteWorkoutById = useCallback(
+    (id: string) => {
+      const filteredWorkouts = workouts.filter((w) => w.id !== id)
+      localStorage.setItem(
+        "workouts",
+        JSON.stringify({ workouts: filteredWorkouts })
+      )
+      setWorkouts(filteredWorkouts)
+      return filteredWorkouts
+    },
+    [workouts, setWorkouts]
+  )
+
+  return { workouts, saveWorkout, getWorkoutById, deleteWorkoutById }
 }

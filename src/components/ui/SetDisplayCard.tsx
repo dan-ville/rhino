@@ -7,10 +7,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Exercise, WorkoutType } from "@/lib/types"
 
 type SetBuilderCardProps = {
   exercise: Exercise
-  workout: Workout
+  workout: WorkoutType
 }
 
 export function SetDisplayCard({ exercise, workout }: SetBuilderCardProps) {
@@ -27,7 +28,7 @@ export function SetDisplayCard({ exercise, workout }: SetBuilderCardProps) {
       <TableBody>
         {exercise.sets?.map((set, i) => (
           <TableRow key={set.id}>
-            <TableCell>{i}</TableCell>
+            <TableCell>{i + 1}</TableCell>
             <TableCell>{set.reps}</TableCell>
             <TableCell>{set.weight}</TableCell>
             <TableCell>{exercise.units}</TableCell>

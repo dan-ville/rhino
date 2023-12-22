@@ -1,4 +1,4 @@
-type ExerciseAPIData = {
+export type ExerciseAPIData = {
   name: string
   type: string
   muscle: string
@@ -7,24 +7,25 @@ type ExerciseAPIData = {
   instructions: string
 }
 
-type ExerciseSet = {
+export type ExerciseSet = {
   reps: number | null
   weight: number | null
   rpe?: number | null
   id: string
 }
 
-type Unit = "kg" | "lbs"
-type Exercise = {
+export type Unit = "kg" | "lbs"
+
+export type Exercise = {
   id: string
   exercise?: ExerciseAPIData
   sets?: ExerciseSet[]
   units: Unit
 }
 
-type Workout = {
+export type WorkoutType = {
   id: string
   name: string
-  dateCreated: string
+  createdTime: string
   exercises: Exercise[]
 }
