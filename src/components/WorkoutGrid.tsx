@@ -7,7 +7,6 @@ type Props = {
   workouts: WorkoutType[]
 }
 export function WorkoutGrid({ workouts }: Props) {
-  console.log("re-render workout grid")
   const renderWorkout = (workout: WorkoutType) => (
     <WorkoutDisplay key={workout.id} workout={workout} />
   )
