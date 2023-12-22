@@ -4,6 +4,7 @@ import { SetDisplayCard } from "@/components"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { useWorkoutsDB } from "@/lib/hooks"
 import { getWorkoutTimeOfDay } from "@/lib/utils"
+import Link from "next/link"
 import { Fragment } from "react"
 
 export function WorkoutGrid() {
@@ -16,10 +17,16 @@ export function WorkoutGrid() {
       ) : (
         storedWorkouts.workouts.map((workout) => (
           <Card key={workout.id} className="bg-slate-200">
-            <CardHeader>
+            <CardHeader className="flex-row justify-between">
               <h2 className="text-2xl text-slate-800 font-semibold">
                 {workout.name || getWorkoutTimeOfDay(workout.dateCreated)}
               </h2>
+              <Link
+                href={`/my-workouts/${workout.id}`}
+                className="text-sm font-normal"
+              >
+                Go to workout
+              </Link>
             </CardHeader>
             <CardContent>
               {workout.exercises.map((exercise) => {

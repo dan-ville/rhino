@@ -27,6 +27,10 @@ export const ExerciseLookup = <
   const { name, control, ...selectProps } = props
 
   const loadExerciseOptions = async (inputValue: string) => {
+    // const nexturl = new URL('/exercises')
+    // nexturl.searchParams.set("name", inputValue)
+    // const nextapi = await fetch(nexturl)
+    // console.log(nextapi)
     const url = new URL(`https://api.api-ninjas.com/v1/exercises`)
     url.searchParams.set("name", inputValue)
 

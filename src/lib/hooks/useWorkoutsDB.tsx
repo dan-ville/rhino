@@ -15,21 +15,33 @@ export function useWorkoutsDB() {
     setStoredWorkouts(data)
   }, [])
 
-  const saveWorkout = useCallback(
-    (workout: Workout) => {
-      if (typeof window === undefined) return
+const saveWorkout = useCallback(
+  (workout: Workout, id?: string) => {
+    if (typeof window === "undefined") return
 
-      const newWorkouts = storedWorkouts.workouts
-        ? [...storedWorkouts.workouts, workout]
-        : [workout]
+    let updatedWorkouts = storedWorkouts.workouts
+    const workoutIndex = updatedWorkouts.findIndex((w) => w.id === id)
 
-      localStorage.setItem(
-        "workouts",
-        JSON.stringify({ workouts: newWorkouts })
-      )
-    },
+    if (workoutIndex !== -1) {
+      // Update existing workout
+      updatedWorkouts[workoutIndex] = workout
+    } else {
+      // Add new workout
+      updatedWorkouts = [...updatedWorkouts, workout]
+    }
+
+    localStorage.setItem(
+      "workouts",
+      JSON.stringify({ workouts: updatedWorkouts })
+    )
+  },
+  [storedWorkouts.workouts]
+)
+
+  const getWorkoutById = useCallback(
+    (id: string) => storedWorkouts.workouts.find((w) => w.id === id),
     [storedWorkouts.workouts]
   )
 
-  return { storedWorkouts, saveWorkout }
+  return { storedWorkouts, saveWorkout, getWorkoutById }
 }

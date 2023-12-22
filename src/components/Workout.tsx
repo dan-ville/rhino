@@ -1,20 +1,31 @@
 "use client"
-
+import { useParams, useRouter } from "next/navigation"
 import { useWorkoutsDB } from "@/lib/hooks"
 import { SetBuilderCard } from "./ui/SetBuilderCard"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card"
-import { useForm, FormProvider, useFieldArray } from "react-hook-form"
+import {
+  useForm,
+  FormProvider,
+  useFieldArray,
+  SubmitHandler,
+} from "react-hook-form"
 import { Input } from "./ui/input"
 import { v4 as uuidv4 } from "uuid"
 import { getWorkoutTimeOfDay } from "@/lib/utils"
 
-export function Workout() {
+type Props = {
+  workout?: Workout
+}
+
+export function Workout({ workout }: Props) {
+  const params = useParams()
+  const router = useRouter()
   const { saveWorkout } = useWorkoutsDB()
   const [isEditing, setIsEditing] = useState(false)
-  
-  const formMethods = useForm<Workout>({
+
+  const form = useForm<Workout>({
     defaultValues: {
       id: uuidv4(),
       exercises: [
@@ -29,11 +40,20 @@ export function Workout() {
       name: getWorkoutTimeOfDay(),
     },
   })
-  const { register, control } = formMethods
+
+  const { register, control } = form
+
   const { fields: exercises, append: appendExercise } = useFieldArray({
     name: "exercises",
     control: control,
   })
+
+  useEffect(() => {
+    // workout data does not arrive immediately, and hook form refs do not update with re-renders, so use reset to hydrate the form
+    if (workout) {
+      form.reset({ ...workout })
+    }
+  }, [workout, form])
 
   const handleAppendExercise = () => {
     appendExercise({
@@ -44,12 +64,22 @@ export function Workout() {
     })
   }
 
+  const onSubmitSuccess: SubmitHandler<Workout> = (data) => {
+    saveWorkout(data, params.id)
+    // If already on a Workout page, exit early
+    if ("id" in params) return
+    // Navigate to newly saved Workout
+    else {
+      router.push(`/my-workouts/${data.id}`)
+    }
+  }
+
   return (
     <form
       className="flex gap-6 flex-col"
-      onSubmit={formMethods.handleSubmit(saveWorkout)}
+      onSubmit={form.handleSubmit(onSubmitSuccess)}
     >
-      <FormProvider {...formMethods}>
+      <FormProvider {...form}>
         <Card className="bg-slate-200">
           <CardHeader>
             <Input
