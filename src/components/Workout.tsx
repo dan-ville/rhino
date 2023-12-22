@@ -44,7 +44,7 @@ export function Workout({ workout }: Props) {
 
   const { register, control } = form
 
-  const { fields: exercises, append: appendExercise } = useFieldArray({
+  const { fields: exercises, append: appendExercise, } = useFieldArray({
     name: "exercises",
     control: control,
   })

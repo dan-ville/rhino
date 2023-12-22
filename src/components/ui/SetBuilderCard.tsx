@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "./select"
 import { Label } from "./label"
-import { PlusCircle } from "lucide-react"
+import { PlusCircle, MinusCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Unit } from "@/lib/types"
 
@@ -34,7 +34,7 @@ const FormItem = ({
 )
 export function SetBuilderCard({ exerciseIndex }: SetBuilderCardProps) {
   const { control, register, watch, setValue } = useFormContext()
-  const { fields: sets, append: appendSet } = useFieldArray({
+  const { fields: sets, append: appendSet, remove: removeSet } = useFieldArray({
     name: `exercises.${exerciseIndex}.sets`,
     control,
   })
@@ -68,7 +68,7 @@ export function SetBuilderCard({ exerciseIndex }: SetBuilderCardProps) {
             return (
               <div key={field.id} className="grid gap-1 ">
                 <label>Set {setIndex + 1}</label>
-                <div className="grid gap-2 grid-cols-[1fr_1fr_auto]">
+                <div className="grid gap-2 grid-cols-[1fr_1fr__auto_auto]">
                   <FormItem>
                     <Label
                       htmlFor={`exercises.${exerciseIndex}.sets.${setIndex}.reps`}
@@ -104,6 +104,12 @@ export function SetBuilderCard({ exerciseIndex }: SetBuilderCardProps) {
                     />
                   </FormItem>
                   {/* Appends new set with current values for reps and sets */}
+                  <Button
+                    className="self-end w-max px-2 border-none bg-transparent text-slate-700 hover:bg-transparent"
+                    onClick={() => removeSet(setIndex)}
+                  >
+                    <MinusCircle />
+                  </Button>
                   <Button
                     className="self-end w-max px-2 border-none bg-transparent text-slate-700 hover:bg-transparent"
                     onClick={() => duplicateSet(setIndex)}
