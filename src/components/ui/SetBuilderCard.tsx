@@ -15,6 +15,7 @@ import {
 import { Label } from "./label"
 import { PlusCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Unit } from "@/lib/types"
 
 type SetBuilderCardProps = {
   exerciseIndex: number
