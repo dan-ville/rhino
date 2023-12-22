@@ -44,7 +44,7 @@ export function Workout({ workout }: Props) {
 
   const { register, control } = form
 
-  const { fields: exercises, append: appendExercise, } = useFieldArray({
+  const { fields: exercises, append: appendExercise, remove: removeExercise } = useFieldArray({
     name: "exercises",
     control: control,
   })
@@ -92,7 +92,7 @@ export function Workout({ workout }: Props) {
             <div className="grid gap-2 mb-3">
               {exercises.map((exercise, index) => {
                 return (
-                  <SetBuilderCard key={exercise.id} exerciseIndex={index} />
+                  <SetBuilderCard key={exercise.id} exerciseIndex={index} removeExercise={() => removeExercise(index)} />
                 )
               })}
             </div>

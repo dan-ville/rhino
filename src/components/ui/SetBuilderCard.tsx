@@ -19,6 +19,7 @@ import { Unit } from "@/lib/types"
 
 type SetBuilderCardProps = {
   exerciseIndex: number
+  removeExercise: () => void
 }
 
 const FormItem = ({
@@ -32,7 +33,7 @@ const FormItem = ({
     {children}
   </div>
 )
-export function SetBuilderCard({ exerciseIndex }: SetBuilderCardProps) {
+export function SetBuilderCard({ exerciseIndex, removeExercise }: SetBuilderCardProps) {
   const { control, register, watch, setValue } = useFormContext()
   const { fields: sets, append: appendSet, remove: removeSet } = useFieldArray({
     name: `exercises.${exerciseIndex}.sets`,
@@ -54,12 +55,13 @@ export function SetBuilderCard({ exerciseIndex }: SetBuilderCardProps) {
   return (
     <Card className="bg-slate-50">
       <CardHeader>
-        <div className="w-full">
+        <div className="w-full grid gap-2 grid-cols-[1fr_auto]">
           <ExerciseLookup
             name={`exercises.${exerciseIndex}.exercise`}
             control={control}
             required
           />
+          <Button onClick={() => removeExercise()}>Remove Exercise</Button>
         </div>
       </CardHeader>
       <CardContent>
