@@ -92,25 +92,29 @@ export function Workout({ workout }: Props) {
             <div className="grid gap-2 mb-3">
               {exercises.map((exercise, index) => {
                 return (
-                  <SetBuilderCard key={exercise.id} exerciseIndex={index} removeExercise={() => removeExercise(index)} />
+                  <SetBuilderCard
+                    key={exercise.id}
+                    exerciseIndex={index}
+                    removeExercise={() => removeExercise(index)}
+                  />
                 )
               })}
             </div>
             <Button
-              className="bg-slate-200 border border-dashed border-slate-400 text-slate-700 w-full hover:bg-slate-100"
+              variant="dashed"
               onClick={handleAppendExercise}
             >
               Add Exercise
             </Button>
           </CardContent>
-          <CardFooter className="gap-2">
+          <CardFooter className="gap-2 justify-end">
             <Button
               onClick={() => setIsEditing(!isEditing)}
-              className="ml-auto bg-slate-200 border border-solid border-slate-700 text-slate-700"
+              variant="secondary"
             >
               Edit
             </Button>
-            <Button className="bg-slate-700" type="submit">
+            <Button variant="default" type="submit">
               Save Workout
             </Button>
           </CardFooter>

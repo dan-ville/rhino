@@ -61,7 +61,9 @@ export function SetBuilderCard({ exerciseIndex, removeExercise }: SetBuilderCard
             control={control}
             required
           />
-          <Button onClick={() => removeExercise()}>Remove Exercise</Button>
+          <Button variant="secondary" onClick={() => removeExercise()}>
+            Remove Exercise
+          </Button>
         </div>
       </CardHeader>
       <CardContent>
@@ -125,7 +127,7 @@ export function SetBuilderCard({ exerciseIndex, removeExercise }: SetBuilderCard
           <Button
             type="button"
             onClick={() => handleAppendSet()}
-            className="bg-slate-300 text-slate-600 mt-2 hover:bg-slate-200"
+            variant="secondary"
           >
             Add set
           </Button>

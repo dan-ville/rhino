@@ -1,17 +1,21 @@
 import Link from "next/link"
 import React from "react"
+import { buttonVariants } from "../ui/button"
 
 export function Header() {
-  const linkClass = "bg-slate-700 px-2 py-1 rounded-lg"
+
   return (
     <header>
       <div className="p-6 flex justify-between items-center max-w-5xl mx-auto">
         <span className="text-2xl">RHINO</span>
         <nav className="flex gap-3">
-          <Link href="/my-workouts" className={linkClass}>
+          <Link
+            href="/my-workouts"
+            className={buttonVariants({ variant: "secondary" })}
+          >
             My Workouts
           </Link>
-          <Link href="/" className={linkClass}>
+          <Link href="/" className={buttonVariants({ variant: "secondary" })}>
             New
           </Link>
         </nav>
