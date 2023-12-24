@@ -122,7 +122,11 @@ export function Workout({ workout }: Props) {
                 )
               })}
             </div>
-            <Button variant="dashed" onClick={handleAppendExercise}>
+            <Button
+              variant="dashed"
+              type="button"
+              onClick={handleAppendExercise}
+            >
               Add Exercise
             </Button>
           </CardContent>
@@ -130,6 +134,7 @@ export function Workout({ workout }: Props) {
             <Button
               onClick={() => setIsEditing(!isEditing)}
               variant="secondary"
+              type="button"
             >
               Edit
             </Button>

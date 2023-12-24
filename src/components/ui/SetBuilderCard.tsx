@@ -61,7 +61,11 @@ export function SetBuilderCard({ exerciseIndex, removeExercise }: SetBuilderCard
             control={control}
             required
           />
-          <Button variant="secondary" onClick={() => removeExercise()}>
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={() => removeExercise()}
+          >
             Remove Exercise
           </Button>
         </div>
@@ -111,12 +115,14 @@ export function SetBuilderCard({ exerciseIndex, removeExercise }: SetBuilderCard
                   <Button
                     className="self-end w-max px-2 border-none bg-transparent text-slate-700 hover:bg-transparent"
                     onClick={() => removeSet(setIndex)}
+                    type="button"
                   >
                     <MinusCircle />
                   </Button>
                   <Button
                     className="self-end w-max px-2 border-none bg-transparent text-slate-700 hover:bg-transparent"
                     onClick={() => duplicateSet(setIndex)}
+                    type="button"
                   >
                     <PlusCircle />
                   </Button>
