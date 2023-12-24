@@ -10,7 +10,7 @@ export function useWorkoutsDB() {
   const { workouts, setWorkouts } = useAppContext()
 
   const saveWorkout = useCallback(
-    (workout: WorkoutType, id?: string) => {
+    async (workout: WorkoutType, id?: string) => {
       if (typeof window === "undefined") return
 
       let updatedWorkouts = workouts
@@ -24,11 +24,13 @@ export function useWorkoutsDB() {
         updatedWorkouts = [...updatedWorkouts, workout]
       }
 
-      localStorage.setItem(
-        "workouts",
-        JSON.stringify({ workouts: updatedWorkouts })
-      )
-      setWorkouts(updatedWorkouts)
+      setTimeout(() => {
+        localStorage.setItem(
+          "workouts",
+          JSON.stringify({ workouts: updatedWorkouts })
+        )
+        setWorkouts(updatedWorkouts)
+      }, 1500)
     },
     [workouts, setWorkouts]
   )

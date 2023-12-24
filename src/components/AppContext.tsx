@@ -22,7 +22,7 @@ const { Provider } = AppContext
 
 export function AppContextProvider({ children }: PropsWithChildren) {
   const [workouts, setWorkouts] = useState<WorkoutType[]>([])
-  console.log(workouts)
+
   useEffect(() => {
     // set workouts from only after component has mounted, as getWorkouts depends on localStorage which is not available on the server
     if (typeof window === undefined) return

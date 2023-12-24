@@ -15,6 +15,7 @@ import { Input } from "./ui/input"
 import { v4 as uuidv4 } from "uuid"
 import { getWorkoutTimeOfDay } from "@/lib/utils"
 import { WorkoutType } from "@/lib/types"
+import { STATUS } from "@/lib/constants"
 
 type Props = {
   workout?: WorkoutType
@@ -25,7 +26,8 @@ export function Workout({ workout }: Props) {
   const router = useRouter()
   const { saveWorkout } = useWorkoutsDB()
   const [isEditing, setIsEditing] = useState(false)
-
+  const [saveStatus, setSaveStatus] = useState(STATUS.IDLE)
+  console.log(saveStatus)
   const form = useForm<WorkoutType>({
     defaultValues: {
       id: uuidv4(),
@@ -44,7 +46,11 @@ export function Workout({ workout }: Props) {
 
   const { register, control } = form
 
-  const { fields: exercises, append: appendExercise, remove: removeExercise } = useFieldArray({
+  const {
+    fields: exercises,
+    append: appendExercise,
+    remove: removeExercise,
+  } = useFieldArray({
     name: "exercises",
     control: control,
   })
@@ -65,13 +71,29 @@ export function Workout({ workout }: Props) {
     })
   }
 
-  const onSubmitSuccess: SubmitHandler<WorkoutType> = (data) => {
-    saveWorkout(data, params.id)
-    // If already on a Workout page, exit early
-    if ("id" in params) return
-    // Navigate to newly saved Workout
-    else {
-      router.push(`/my-workouts/${data.id}`)
+  const onSubmitSuccess: SubmitHandler<WorkoutType> = async (data) => {
+    setSaveStatus(STATUS.LOADING)
+
+    // Introduce a slight delay to ensure UI updates
+    await new Promise((resolve) => setTimeout(resolve, 500))
+
+    try {
+      await saveWorkout(data, params.id)
+      setSaveStatus(STATUS.SUCCESS)
+
+      // Delay the switch back to IDLE
+      setTimeout(() => {
+        setSaveStatus(STATUS.IDLE)
+
+        // Navigate if not already on a Workout page
+        if (!("id" in params)) {
+          router.push(`/my-workouts/${data.id}`)
+        }
+      }, 500) // half a second to show the success message
+    } catch (error) {
+      // Handle any errors here
+      console.error(error)
+      setSaveStatus(STATUS.IDLE)
     }
   }
 
@@ -100,10 +122,7 @@ export function Workout({ workout }: Props) {
                 )
               })}
             </div>
-            <Button
-              variant="dashed"
-              onClick={handleAppendExercise}
-            >
+            <Button variant="dashed" onClick={handleAppendExercise}>
               Add Exercise
             </Button>
           </CardContent>
@@ -114,7 +133,14 @@ export function Workout({ workout }: Props) {
             >
               Edit
             </Button>
-            <Button variant="default" type="submit">
+            <Button
+              variant="default"
+              type="submit"
+              disabled={saveStatus !== STATUS.IDLE}
+              loading={saveStatus === STATUS.LOADING}
+              success={saveStatus === STATUS.SUCCESS}
+              successMessage="Saved!"
+            >
               Save Workout
             </Button>
           </CardFooter>
