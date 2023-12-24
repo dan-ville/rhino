@@ -27,7 +27,7 @@ export function Workout({ workout }: Props) {
   const { saveWorkout } = useWorkoutsDB()
   const [isEditing, setIsEditing] = useState(false)
   const [saveStatus, setSaveStatus] = useState(STATUS.IDLE)
-  console.log(saveStatus)
+
   const form = useForm<WorkoutType>({
     defaultValues: {
       id: uuidv4(),
