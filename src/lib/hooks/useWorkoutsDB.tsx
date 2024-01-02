@@ -3,7 +3,7 @@
 import { useCallback } from "react"
 
 import { WorkoutType } from "../types"
-import { useAppContext } from "@/components/AppContext"
+import { useAppContext } from "@/components/appContext"
 
 // TODO: Convert this to a singleton function/class outside of react lifecycle
 export function useWorkoutsDB() {

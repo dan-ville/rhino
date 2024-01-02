@@ -1,13 +1,13 @@
 "use client"
 import React, { Fragment } from "react"
-import { Card, CardContent, CardHeader } from "./ui/card"
+import { Card, CardContent, CardHeader } from "../ui/card"
 import { WorkoutType } from "@/lib/types"
 import Link from "next/link"
 import { getWorkoutTimeOfDay } from "@/lib/utils"
-import { SetDisplayCard } from "./ui/SetDisplayCard"
+import { SetDisplayCard } from "../ui/setDisplayCard"
 import { useWorkoutsDB } from "@/lib/hooks"
-import { Maximize2, Trash2 } from "../../public/icons"
-import { Button, buttonVariants } from "./ui/button"
+import { Maximize2, Trash2 } from "../../../public/icons"
+import { Button, buttonVariants } from "../ui/button"
 
 type Props = {
   workout: WorkoutType
@@ -29,6 +29,7 @@ export default function WorkoutDisplay({ workout }: Props) {
         <h2 className="text-2xl text-slate-800 font-semibold">
           {workout.name || getWorkoutTimeOfDay(workout.createdTime)}
         </h2>
+        <sub>{workout.createdTime}</sub>
         <div className="flex gap-2">
           <Link href={`/my-workouts/${workout.id}`} className={linkClass}>
             <Maximize2 />

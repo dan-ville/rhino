@@ -33,9 +33,16 @@ const FormItem = ({
     {children}
   </div>
 )
-export function SetBuilderCard({ exerciseIndex, removeExercise }: SetBuilderCardProps) {
+export function SetBuilderCard({
+  exerciseIndex,
+  removeExercise,
+}: SetBuilderCardProps) {
   const { control, register, watch, setValue } = useFormContext()
-  const { fields: sets, append: appendSet, remove: removeSet } = useFieldArray({
+  const {
+    fields: sets,
+    append: appendSet,
+    remove: removeSet,
+  } = useFieldArray({
     name: `exercises.${exerciseIndex}.sets`,
     control,
   })

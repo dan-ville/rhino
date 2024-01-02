@@ -1,5 +1,4 @@
-import { Page } from "@/components"
-import { Workout } from "@/components/Workout"
+import { Page, Workout } from "@/components"
 
 export default async function Home() {
   return (

@@ -1,17 +1,17 @@
 "use client"
 import { useParams, useRouter } from "next/navigation"
 import { useWorkoutsDB } from "@/lib/hooks"
-import { SetBuilderCard } from "./ui/SetBuilderCard"
+import { SetBuilderCard } from "../ui/setBuilderCard"
 import { useEffect, useState } from "react"
-import { Button } from "./ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "./ui/card"
+import { Button } from "../ui/button"
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
 import {
   useForm,
   FormProvider,
   useFieldArray,
   SubmitHandler,
 } from "react-hook-form"
-import { Input } from "./ui/input"
+import { Input } from "../ui/input"
 import { v4 as uuidv4 } from "uuid"
 import { getWorkoutTimeOfDay } from "@/lib/utils"
 import { WorkoutType } from "@/lib/types"
