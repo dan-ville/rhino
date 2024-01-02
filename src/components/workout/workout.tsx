@@ -36,7 +36,7 @@ export function Workout({ workout }: Props) {
           id: uuidv4(),
           units: "lbs",
           sets: [{ id: uuidv4(), reps: null, weight: null }],
-          exercise: undefined,
+          exercise: null,
         },
       ],
       createdTime: new Date().toUTCString(),
@@ -67,7 +67,7 @@ export function Workout({ workout }: Props) {
       id: uuidv4(),
       units: "lbs",
       sets: [{ id: uuidv4(), reps: null, weight: null }],
-      exercise: undefined,
+      exercise: null,
     })
   }
 

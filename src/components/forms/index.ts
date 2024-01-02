@@ -1,1 +1,1 @@
-export * from './ExerciseLookup'
+export * from "./exerciseLookup"

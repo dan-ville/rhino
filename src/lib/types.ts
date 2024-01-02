@@ -18,7 +18,7 @@ export type Unit = "kg" | "lbs"
 
 export type Exercise = {
   id: string
-  exercise?: ExerciseAPIData
+  exercise: ExerciseAPIData | null
   sets?: ExerciseSet[]
   units: Unit
 }

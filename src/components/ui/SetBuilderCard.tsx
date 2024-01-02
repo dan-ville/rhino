@@ -1,7 +1,7 @@
 "use client"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Input } from "./input"
-import { ExerciseLookup } from "../forms/ExerciseLookup"
+import { ExerciseLookup } from "../forms/exerciseLookup"
 import { useFieldArray, useFormContext } from "react-hook-form"
 import { Button } from "./button"
 import { v4 as uuidv4 } from "uuid"
@@ -16,6 +16,8 @@ import { Label } from "./label"
 import { PlusCircle, MinusCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Unit } from "@/lib/types"
+import { ErrorMessage } from "@hookform/error-message"
+import { renderErrorMessage } from "./utils"
 
 type SetBuilderCardProps = {
   exerciseIndex: number
@@ -37,7 +39,13 @@ export function SetBuilderCard({
   exerciseIndex,
   removeExercise,
 }: SetBuilderCardProps) {
-  const { control, register, watch, setValue } = useFormContext()
+  const {
+    control,
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext()
   const {
     fields: sets,
     append: appendSet,
@@ -63,11 +71,18 @@ export function SetBuilderCard({
     <Card className="bg-slate-50">
       <CardHeader>
         <div className="w-full grid gap-2 grid-cols-[1fr_auto]">
-          <ExerciseLookup
-            name={`exercises.${exerciseIndex}.exercise`}
-            control={control}
-            required
-          />
+          <div>
+            <ExerciseLookup
+              name={`exercises.${exerciseIndex}.exercise`}
+              control={control}
+              rules={{ required: "Please select an exercise." }}
+            />
+            <ErrorMessage
+              name={`exercises.${exerciseIndex}.exercise`}
+              errors={errors}
+              render={renderErrorMessage}
+            />
+          </div>
           <Button
             variant="secondary"
             type="button"
@@ -95,10 +110,15 @@ export function SetBuilderCard({
                       {...register(
                         `exercises.${exerciseIndex}.sets.${setIndex}.reps`,
                         {
+                          required: "This field is required.",
                           valueAsNumber: true,
                         }
                       )}
-                      required
+                    />
+                    <ErrorMessage
+                      name={`exercises.${exerciseIndex}.sets.${setIndex}.reps`}
+                      errors={errors}
+                      render={renderErrorMessage}
                     />
                   </FormItem>
                   <FormItem>
@@ -112,10 +132,15 @@ export function SetBuilderCard({
                       {...register(
                         `exercises.${exerciseIndex}.sets.${setIndex}.weight`,
                         {
+                          required: "This field is required.",
                           valueAsNumber: true,
                         }
                       )}
-                      required
+                    />
+                    <ErrorMessage
+                      name={`exercises.${exerciseIndex}.sets.${setIndex}.weight`}
+                      errors={errors}
+                      render={renderErrorMessage}
                     />
                   </FormItem>
                   {/* Appends new set with current values for reps and sets */}

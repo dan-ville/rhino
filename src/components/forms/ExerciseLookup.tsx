@@ -1,5 +1,5 @@
 "use client"
-import { Controller } from "react-hook-form"
+import { Controller, FieldValues, RegisterOptions } from "react-hook-form"
 import Select from "react-select/async"
 import { Props, GroupBase } from "react-select"
 
@@ -15,6 +15,12 @@ type Exercise = {
 interface SelectFieldProps<Option, IsMulti, Group> extends Props {
   name: string
   control: any
+  rules?:
+    | Omit<
+        RegisterOptions<FieldValues, string>,
+        "setValueAs" | "disabled" | "valueAsNumber" | "valueAsDate"
+      >
+    | undefined
 }
 
 export const ExerciseLookup = <
@@ -24,13 +30,9 @@ export const ExerciseLookup = <
 >(
   props: SelectFieldProps<Option, IsMulti, Group>
 ) => {
-  const { name, control, ...selectProps } = props
+  const { name, control, rules, ...selectProps } = props
 
   const loadExerciseOptions = async (inputValue: string) => {
-    // const nexturl = new URL('/exercises')
-    // nexturl.searchParams.set("name", inputValue)
-    // const nextapi = await fetch(nexturl)
-    // console.log(nextapi)
     const url = new URL(`https://api.api-ninjas.com/v1/exercises`)
     url.searchParams.set("name", inputValue)
 
@@ -47,6 +49,7 @@ export const ExerciseLookup = <
     <Controller
       name={name}
       control={control}
+      rules={rules}
       render={({ field }) => {
         return (
           <Select
@@ -54,6 +57,7 @@ export const ExerciseLookup = <
             {...selectProps}
             loadOptions={loadExerciseOptions}
             placeholder="Select exercise"
+            isClearable
             getOptionLabel={(opt: Exercise) => opt.name}
             getOptionValue={(opt: Exercise) => opt.name}
           />
