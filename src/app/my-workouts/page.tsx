@@ -6,10 +6,8 @@ export default function MyWorkoutsPage() {
   const workouts = useAppContextSelector((state) => state.workouts)
 
   return (
-    <main>
-      <Page>
-        <WorkoutGrid workouts={workouts} />
-      </Page>
-    </main>
+    <Page>
+      <WorkoutGrid workouts={workouts} />
+    </Page>
   )
 }

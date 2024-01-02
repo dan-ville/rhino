@@ -34,9 +34,5 @@ export default function WorkoutPage({ params: { id } }: PageProps) {
       content = <Workout workout={data} />
   }
 
-  return (
-    <main>
-      <Page>{content}</Page>
-    </main>
-  )
+  return <Page>{content}</Page>
 }
