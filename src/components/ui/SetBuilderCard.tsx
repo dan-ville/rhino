@@ -1,8 +1,8 @@
 "use client"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/Card"
+import { Card, CardContent, CardFooter, CardHeader, Button } from "@/components"
 import { Input } from "./Input"
 import { useFieldArray, useFormContext } from "react-hook-form"
-import { Button } from "./Button"
+
 import { v4 as uuidv4 } from "uuid"
 import {
   Select,
