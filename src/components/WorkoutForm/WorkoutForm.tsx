@@ -46,7 +46,7 @@ export function WorkoutForm(props: Props) {
   }
 
   return (
-    <form className="flex gap-6 flex-col" onSubmit={onSubmit}>
+    <form className="flex flex-col" onSubmit={onSubmit}>
       <FormProvider {...form}>
         <CardHeader className="flex-row items-center gap-4">
           <Input
