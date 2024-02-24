@@ -1,9 +1,6 @@
 "use client"
 
-import { useAppContextSelector } from "@/components/AppContext"
-import { WorkoutGrid } from "@/components/WorkoutGrid"
-import { Page } from "@/components/layout"
-
+import { useAppContextSelector, WorkoutGrid, Page } from "@/components"
 
 export default function MyWorkoutsPage() {
   const workouts = useAppContextSelector((state) => state.workouts)

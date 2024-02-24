@@ -1,13 +1,9 @@
 "use client"
 import React, { Fragment } from "react"
-import { Card, CardContent, CardHeader } from "../ui/Card"
+import { Card, CardContent, CardHeader } from "../../ui/Card"
 import { WorkoutType } from "@/lib/types"
-import Link from "next/link"
 import { getWorkoutTimeOfDay } from "@/lib/utils"
-import { SetDisplayCard } from "../ui/SetDisplayCard"
-import { useWorkoutsDB } from "@/lib/hooks"
-import { Maximize2, Trash2 } from "../../../public/icons"
-import { Button, buttonVariants } from "../ui/Button"
+import { SetDisplayCard } from "../../ui/SetDisplayCard"
 
 type Props = {
   workout: WorkoutType

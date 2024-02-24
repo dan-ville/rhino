@@ -28,7 +28,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/ui/SetBuilderCard.tsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -10,8 +10,8 @@ import { getWorkoutTimeOfDay } from "@/lib/utils"
 import { WorkoutType } from "@/lib/types"
 import { STATUS } from "@/lib/constants"
 import { v4 as uuidv4 } from "uuid"
-import { WorkoutForm } from "../WorkoutForm/WorkoutForm"
-import { WorkoutDisplay } from "../WorkoutDisplay"
+import { WorkoutForm } from "./WorkoutForm/WorkoutForm"
+import { WorkoutDisplay } from "./WorkoutDisplay"
 
 type Props = {
   workout?: WorkoutType

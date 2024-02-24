@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { WorkoutDisplay } from "../WorkoutDisplay"
+import { WorkoutDisplay } from "../Workout/WorkoutDisplay"
 import { WorkoutType } from "@/lib/types"
 import {
   Select,
