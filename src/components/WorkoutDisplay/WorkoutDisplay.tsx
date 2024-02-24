@@ -25,8 +25,8 @@ export function WorkoutDisplay({ workout }: Props) {
 
   return (
     <Card key={workout.id} className="bg-slate-200">
-      <CardHeader className="flex-row justify-between items-center">
-        <h2 className="text-2xl text-slate-800 font-semibold">
+      <CardHeader className="flex-row justify-between items-center p-6">
+        <h2 className="text-xl text-slate-800 font-semibold">
           {workout.name || getWorkoutTimeOfDay(workout.userDate)}
         </h2>
         <div className="flex gap-2 items-center">
@@ -45,11 +45,11 @@ export function WorkoutDisplay({ workout }: Props) {
           </Button>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6 pt-0">
         {workout.exercises.map((exercise) => {
           return (
             <Fragment key={exercise.id}>
-              <p className="font-semibold py-2">{exercise.exercise?.name}</p>
+              <p className="font-medium py-1 border-b border-solid border-gray-300">{exercise.exercise?.name}</p>
               <SetDisplayCard
                 key={exercise.id}
                 exercise={exercise}

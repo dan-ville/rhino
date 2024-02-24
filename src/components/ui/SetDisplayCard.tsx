@@ -18,20 +18,23 @@ export function SetDisplayCard({ exercise, workout }: SetBuilderCardProps) {
   return exercise.sets?.length ? (
     <Table>
       <TableHeader>
-        <TableRow>
-          <TableHead>Set</TableHead>
-          <TableHead>Reps</TableHead>
-          <TableHead>Weight</TableHead>
-          <TableHead>Units</TableHead>
+        <TableRow className="p-1">
+          <TableHead className="p-1">Set</TableHead>
+          <TableHead className="p-1">Reps</TableHead>
+          <TableHead className="p-1">Weight</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {exercise.sets?.map((set, i) => (
           <TableRow key={set.id}>
-            <TableCell>{i + 1}</TableCell>
-            <TableCell>{set.reps}</TableCell>
-            <TableCell>{set.weight}</TableCell>
-            <TableCell>{exercise.units}</TableCell>
+            <TableCell className="p-1 w-[60px]">{i + 1}</TableCell>
+            <TableCell className="p-1 w-[60px]">{set.reps}</TableCell>
+            <TableCell className="p-1">
+              {set.weight}{" "}
+              <span className="font-light text-slate-500">
+                {exercise.units}
+              </span>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
