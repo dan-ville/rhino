@@ -1,9 +1,9 @@
 "use client"
 import React, { Fragment } from "react"
-import { Card, CardContent, CardHeader } from "../../ui/Card"
+import { Card, CardContent, CardHeader } from "../../Card"
 import { WorkoutType } from "@/lib/types"
 import { getWorkoutTimeOfDay } from "@/lib/utils"
-import { SetDisplayCard } from "../../ui/SetDisplayCard"
+import { SetDisplayCard } from "../../SetDisplayCard"
 
 type Props = {
   workout: WorkoutType

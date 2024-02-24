@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { FormProvider, UseFormReturn, useFieldArray } from "react-hook-form"
 import { WorkoutType } from "@/lib/types"
-import { Button, Input, SetBuilderCard } from "../../ui"
-import { CardContent, CardFooter, CardHeader } from "../../ui/Card"
-import { DatePicker } from "../../ui/DatePicker"
+import { Button, Input, SetBuilderCard } from "../.."
+import { CardContent, CardFooter, CardHeader } from "../../Card"
+import { DatePicker } from "../../DatePicker"
 import { v4 as uuidv4 } from "uuid"
 import { STATUS } from "@/lib/constants"
 

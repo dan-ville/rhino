@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { WorkoutDisplay } from "../Workout/WorkoutDisplay"
+
 import { WorkoutType } from "@/lib/types"
 import {
   Select,
@@ -9,13 +9,6 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/Select"
-import Link from "next/link"
-import { Maximize2, Trash2 } from "lucide-react"
-import { Button, buttonVariants } from "../ui"
-import { useWorkoutsDB } from "@/lib/hooks"
-
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -25,7 +18,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../ui/AlertDialog"
+  Button,
+  WorkoutDisplay,
+} from "@/components/ui"
+import Link from "next/link"
+import { Maximize2, Trash2 } from "lucide-react"
+
+import { useWorkoutsDB } from "@/lib/hooks"
 
 type Props = {
   workouts: WorkoutType[]

@@ -2,8 +2,8 @@
 import { useParams, useRouter } from "next/navigation"
 import { useWorkoutsDB } from "@/lib/hooks"
 import { useEffect, useState } from "react"
-import { Button } from "../ui/Button"
-import { Card } from "../ui/Card"
+import { Button } from "../Button"
+import { Card } from "../Card"
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form"
 
 import { getWorkoutTimeOfDay } from "@/lib/utils"
