@@ -37,9 +37,6 @@ export function WorkoutGrid({ workouts }: Props) {
   const sortByNewest = (a: WorkoutType, b: WorkoutType) =>
     new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime()
 
-  console.log(workouts.map((w) => w.exercises))
-
-  console.log(filterValue)
   // const filterSelectOptions = new Set(
   //   workouts.reduce((arr, workout) => {
   //     arr.indexOf()

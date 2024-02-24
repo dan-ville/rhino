@@ -28,4 +28,5 @@ export type WorkoutType = {
   name: string
   createdTime: string
   exercises: Exercise[]
+  userDate: string
 }

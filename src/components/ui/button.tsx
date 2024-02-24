@@ -73,7 +73,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           </div>
         ) : null}
         {success ? <div className="absolute">{successMessage}</div> : null}
-        <div className={loading || success ? "opacity-0" : ""}>{children}</div>
+        <div
+          className={
+            loading || success
+              ? "opacity-0"
+              : "flex justify-center items-center w-full"
+          }
+        >
+          {children}
+        </div>
       </Component>
     )
   }

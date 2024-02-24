@@ -1,7 +1,6 @@
 "use client"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Input } from "./input"
-import { ExerciseLookup } from "../forms/exerciseLookup"
 import { useFieldArray, useFormContext } from "react-hook-form"
 import { Button } from "./button"
 import { v4 as uuidv4 } from "uuid"
@@ -18,6 +17,7 @@ import { cn } from "@/lib/utils"
 import { Unit } from "@/lib/types"
 import { ErrorMessage } from "@hookform/error-message"
 import { renderErrorMessage } from "./utils"
+import { ExerciseLookup } from "../forms"
 
 type SetBuilderCardProps = {
   exerciseIndex: number

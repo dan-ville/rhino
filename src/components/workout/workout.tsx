@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from "uuid"
 import { getWorkoutTimeOfDay } from "@/lib/utils"
 import { WorkoutType } from "@/lib/types"
 import { STATUS } from "@/lib/constants"
+import { DatePicker } from "../ui/date-picker"
 
 type Props = {
   workout?: WorkoutType
@@ -27,6 +28,9 @@ export function Workout({ workout }: Props) {
   const { saveWorkout } = useWorkoutsDB()
   const [isEditing, setIsEditing] = useState(false)
   const [saveStatus, setSaveStatus] = useState(STATUS.IDLE)
+  const [userDate, setUserDate] = useState<Date | undefined>(
+    workout?.userDate ? new Date(workout.userDate) : new Date()
+  )
 
   const form = useForm<WorkoutType>({
     defaultValues: {
@@ -97,6 +101,11 @@ export function Workout({ workout }: Props) {
     }
   }
 
+  const handleSetUserDate = (date?: Date) => {
+    setUserDate(date)
+    form.setValue("userDate", date?.toDateString() ?? new Date().toDateString())
+  }
+
   return (
     <form
       className="flex gap-6 flex-col"
@@ -104,11 +113,12 @@ export function Workout({ workout }: Props) {
     >
       <FormProvider {...form}>
         <Card className="bg-slate-200">
-          <CardHeader>
+          <CardHeader className="flex-row items-center gap-4">
             <Input
               className="text-xl text-slate-800 font-semibold bg-slate-200"
               {...register("name")}
             />
+            <DatePicker date={userDate} setDate={handleSetUserDate} required />
           </CardHeader>
           <CardContent>
             <div className="grid gap-2 mb-3">
