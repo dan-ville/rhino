@@ -1,4 +1,5 @@
-import { Page, Workout } from "@/components"
+import { Workout } from "@/components/Workout";
+import { Page } from "@/components/layout";
 
 export default async function Home() {
   return (

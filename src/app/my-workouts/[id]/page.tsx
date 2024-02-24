@@ -1,5 +1,6 @@
 "use client"
-import { Page, Workout } from "@/components"
+import { Workout } from "@/components/Workout"
+import { Page } from "@/components/layout"
 import { STATUS } from "@/lib/constants"
 import { useWorkoutsDB } from "@/lib/hooks"
 import { WorkoutType } from "@/lib/types"

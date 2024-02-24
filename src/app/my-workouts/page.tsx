@@ -1,5 +1,8 @@
 "use client"
-import { Page, WorkoutGrid, useAppContextSelector } from "@/components"
+
+import { useAppContextSelector } from "@/components/AppContext"
+import { WorkoutGrid } from "@/components/WorkoutGrid"
+import { Page } from "@/components/layout"
 
 
 export default function MyWorkoutsPage() {
