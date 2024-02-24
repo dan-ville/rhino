@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react"
 import { FormProvider, UseFormReturn, useFieldArray } from "react-hook-form"
 import { WorkoutType } from "@/lib/types"
