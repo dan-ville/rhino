@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/Table"
+} from "@/components"
 import { Exercise, WorkoutType } from "@/lib/types"
 
 type SetBuilderCardProps = {

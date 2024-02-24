@@ -3,16 +3,13 @@ import { useParams, useRouter } from "next/navigation"
 import { useWorkoutsDB } from "@/lib/hooks"
 import { useEffect, useState } from "react"
 
-import { Card } from "../Card"
 import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form"
 
 import { getWorkoutTimeOfDay } from "@/lib/utils"
 import { WorkoutType } from "@/lib/types"
 import { STATUS } from "@/lib/constants"
 import { v4 as uuidv4 } from "uuid"
-import { WorkoutForm } from "./WorkoutForm"
-import { WorkoutDisplay } from "./WorkoutDisplay"
-import { Button } from "@/components"
+import { Button, Card, WorkoutForm, WorkoutDisplay } from "@/components"
 
 type Props = {
   workout?: WorkoutType
