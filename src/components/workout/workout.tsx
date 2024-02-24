@@ -93,7 +93,7 @@ export function Workout({ workout, isEditing: _isEditing }: Props) {
           actions={
             <Button
               onClick={() => setIsEditing(!isEditing)}
-              variant="secondary"
+              variant="ghost"
               type="button"
               size="sm"
             >

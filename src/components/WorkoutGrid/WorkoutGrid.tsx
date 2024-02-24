@@ -15,6 +15,18 @@ import { Maximize2, Trash2 } from "lucide-react"
 import { Button, buttonVariants } from "../ui"
 import { useWorkoutsDB } from "@/lib/hooks"
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/AlertDialog"
+
 type Props = {
   workouts: WorkoutType[]
 }
@@ -54,16 +66,34 @@ export function WorkoutGrid({ workouts }: Props) {
             <Maximize2 />
           </Link>
           {/* TODO: Create WorkoutContext so this can be a standalone component */}
-          <Button
-            onClick={() => deleteWorkout(workout)}
-            className={buttonVariants({
-              variant: "outline",
-              className: "text-color-primary p-1 w-[25px] h-[25px]",
-              size: "sm",
-            })}
-          >
-            <Trash2 className="grow-0" />
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Trash2 className={linkClass} />
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-slate-800">
+                  Delete this workout?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel asChild>
+                  <Button variant="secondary">Cancel</Button>
+                </AlertDialogCancel>
+                <AlertDialogAction asChild>
+                  <Button
+                    onClick={() => deleteWorkout(workout)}
+                    variant="secondary"
+                  >
+                    Delete
+                  </Button>
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       }
     />
