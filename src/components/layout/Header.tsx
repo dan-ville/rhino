@@ -1,6 +1,6 @@
 import Link from "next/link"
 import React from "react"
-import { buttonVariants } from "../ui/Button"
+import { buttonVariants } from "@/components"
 
 export function Header() {
   return (
