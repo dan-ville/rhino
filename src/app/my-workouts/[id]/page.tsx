@@ -14,14 +14,18 @@ export default function WorkoutPage({ params: { id } }: PageProps) {
   const [status, setStatus] = useState(STATUS.IDLE)
 
   useEffect(() => {
-    setStatus(STATUS.LOADING)
-    try {
-      const workout = getWorkoutById(id)
-      setData(workout)
-      setStatus(STATUS.SUCCESS)
-    } catch (err) {
-      setStatus(STATUS.ERROR)
+    const getWorkout = () => {
+      setStatus(STATUS.LOADING)
+      try {
+        const workout = getWorkoutById(id)
+        setData(workout)
+        setStatus(STATUS.SUCCESS)
+      } catch (err) {
+        setStatus(STATUS.ERROR)
+      }
     }
+
+    getWorkout()
   }, [id, getWorkoutById])
 
   let content = null

@@ -11,45 +11,30 @@ import { Button, buttonVariants } from "../ui/Button"
 
 type Props = {
   workout: WorkoutType
+  actions?: React.ReactNode
 }
 
-export function WorkoutDisplay({ workout }: Props) {
-  const service = useWorkoutsDB()
-
-  const deleteWorkout = () => service.deleteWorkoutById(workout.id)
-
-  // Hacky way to recreate button styles until I make linkVariants
-  // h-[max-content] is to prevent flex item from resizing, idk how to flexbox it
-  const linkClass =
-    "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-slate-700 border-solid bg-transparent hover:bg-accent hover:text-accent-foreground p-2 h-[max-content]"
+export function WorkoutDisplay(props: Props) {
+  const { workout, actions } = props
 
   return (
     <Card key={workout.id} className="bg-slate-200">
-      <CardHeader className="flex-row justify-between items-center p-6">
-        <h2 className="text-xl text-slate-800 font-semibold">
-          {workout.name || getWorkoutTimeOfDay(workout.userDate)}
-        </h2>
-        <div className="flex gap-2 items-center">
-          <p>{new Date(workout.userDate).toLocaleDateString()}</p>
-          <Link href={`/my-workouts/${workout.id}`} className={linkClass}>
-            <Maximize2 />
-          </Link>
-          <Button
-            onClick={deleteWorkout}
-            className={buttonVariants({
-              variant: "outline",
-              className: "text-color-primary p-2 h-[max-content]",
-            })}
-          >
-            <Trash2 className="grow-0" />
-          </Button>
+      <CardHeader className="flex-row justify-between items-center p-6 flex-wrap">
+        <div className="flex gap-4 items-center flex-wrap">
+          <span className="text-xl text-slate-800 font-semibold">
+            {workout.name || getWorkoutTimeOfDay(workout.userDate)}
+          </span>
+          <span>{new Date(workout.userDate).toLocaleDateString()}</span>
         </div>
+        {actions}
       </CardHeader>
       <CardContent className="p-6 pt-0">
         {workout.exercises.map((exercise) => {
           return (
             <Fragment key={exercise.id}>
-              <p className="font-medium py-1 border-b border-solid border-gray-300">{exercise.exercise?.name}</p>
+              <p className="font-medium py-1 border-b border-solid border-gray-300">
+                {exercise.exercise?.name}
+              </p>
               <SetDisplayCard
                 key={exercise.id}
                 exercise={exercise}

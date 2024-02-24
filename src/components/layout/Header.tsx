@@ -14,7 +14,10 @@ export function Header() {
           >
             My Workouts
           </Link>
-          <Link href="/" className={buttonVariants({ variant: "secondary" })}>
+          <Link
+            href="/my-workouts/new"
+            className={buttonVariants({ variant: "secondary" })}
+          >
             New
           </Link>
         </nav>

@@ -1,36 +1,27 @@
 "use client"
 import { useParams, useRouter } from "next/navigation"
 import { useWorkoutsDB } from "@/lib/hooks"
-import { SetBuilderCard } from "../ui/SetBuilderCard"
 import { useEffect, useState } from "react"
 import { Button } from "../ui/Button"
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/Card"
-import {
-  useForm,
-  FormProvider,
-  useFieldArray,
-  SubmitHandler,
-} from "react-hook-form"
-import { Input } from "../ui/Input"
-import { v4 as uuidv4 } from "uuid"
+import { Card } from "../ui/Card"
+import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form"
+
 import { getWorkoutTimeOfDay } from "@/lib/utils"
 import { WorkoutType } from "@/lib/types"
 import { STATUS } from "@/lib/constants"
-import { DatePicker } from "../ui/DatePicker"
+import { v4 as uuidv4 } from "uuid"
+import { WorkoutForm } from "../WorkoutForm/WorkoutForm"
+import { WorkoutDisplay } from "../WorkoutDisplay"
 
 type Props = {
   workout?: WorkoutType
+  isEditing?: boolean
 }
 
-export function Workout({ workout }: Props) {
+export function Workout({ workout, isEditing: _isEditing }: Props) {
   const params = useParams()
   const router = useRouter()
   const { saveWorkout } = useWorkoutsDB()
-  const [isEditing, setIsEditing] = useState(false)
-  const [saveStatus, setSaveStatus] = useState(STATUS.IDLE)
-  const [userDate, setUserDate] = useState<Date | undefined>(
-    workout?.userDate ? new Date(workout.userDate) : new Date()
-  )
 
   const form = useForm<WorkoutType>({
     defaultValues: {
@@ -45,19 +36,12 @@ export function Workout({ workout }: Props) {
       ],
       createdTime: new Date().toUTCString(),
       name: getWorkoutTimeOfDay(),
+      userDate: new Date().toDateString(),
     },
   })
 
-  const { register, control } = form
-
-  const {
-    fields: exercises,
-    append: appendExercise,
-    remove: removeExercise,
-  } = useFieldArray({
-    name: "exercises",
-    control: control,
-  })
+  const [isEditing, setIsEditing] = useState(_isEditing || false)
+  const [saveStatus, setSaveStatus] = useState(STATUS.IDLE)
 
   useEffect(() => {
     // workout data does not arrive immediately, and hook form refs do not update with re-renders, so use reset to hydrate the form
@@ -65,15 +49,6 @@ export function Workout({ workout }: Props) {
       form.reset({ ...workout })
     }
   }, [workout, form])
-
-  const handleAppendExercise = () => {
-    appendExercise({
-      id: uuidv4(),
-      units: "lbs",
-      sets: [{ id: uuidv4(), reps: null, weight: null }],
-      exercise: null,
-    })
-  }
 
   const onSubmitSuccess: SubmitHandler<WorkoutType> = async (data) => {
     setSaveStatus(STATUS.LOADING)
@@ -94,6 +69,7 @@ export function Workout({ workout }: Props) {
           router.push(`/my-workouts/${data.id}`)
         }
       }, 500) // half a second to show the success message
+      setIsEditing(false)
     } catch (error) {
       // Handle any errors here
       console.error(error)
@@ -101,67 +77,31 @@ export function Workout({ workout }: Props) {
     }
   }
 
-  const handleSetUserDate = (date?: Date) => {
-    setUserDate(date)
-    form.setValue("userDate", date?.toDateString() ?? new Date().toDateString())
+  const onSubmitFail: SubmitErrorHandler<WorkoutType> = () => {
+    console.error("Failed to submit")
   }
 
+  const onSubmit = form.handleSubmit(onSubmitSuccess, onSubmitFail)
+
   return (
-    <form
-      className="flex gap-6 flex-col"
-      onSubmit={form.handleSubmit(onSubmitSuccess)}
-    >
-      <FormProvider {...form}>
-        <Card className="bg-slate-200">
-          <CardHeader className="flex-row items-center gap-4">
-            <Input
-              className="text-xl text-slate-800 font-semibold bg-slate-200"
-              {...register("name")}
-              placeholder="Workout Name"
-            />
-            <DatePicker date={userDate} setDate={handleSetUserDate} required />
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-2 mb-3">
-              {exercises.map((exercise, index) => {
-                return (
-                  <SetBuilderCard
-                    key={exercise.id}
-                    exerciseIndex={index}
-                    removeExercise={() => removeExercise(index)}
-                  />
-                )
-              })}
-            </div>
-            <Button
-              variant="dashed"
-              type="button"
-              onClick={handleAppendExercise}
-            >
-              Add Exercise
-            </Button>
-          </CardContent>
-          <CardFooter className="gap-2 justify-end">
+    <Card className="bg-slate-200">
+      {isEditing ? (
+        <WorkoutForm form={form} onSubmit={onSubmit} saveStatus={saveStatus} />
+      ) : (
+        <WorkoutDisplay
+          workout={form.watch()}
+          actions={
             <Button
               onClick={() => setIsEditing(!isEditing)}
               variant="secondary"
               type="button"
+              size="sm"
             >
               Edit
             </Button>
-            <Button
-              variant="default"
-              type="submit"
-              disabled={saveStatus !== STATUS.IDLE}
-              loading={saveStatus === STATUS.LOADING}
-              success={saveStatus === STATUS.SUCCESS}
-              successMessage="Saved!"
-            >
-              Save Workout
-            </Button>
-          </CardFooter>
-        </Card>
-      </FormProvider>
-    </form>
+          }
+        />
+      )}
+    </Card>
   )
 }
