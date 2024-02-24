@@ -1,12 +1,18 @@
-'use client'
+"use client"
 import React, { useState } from "react"
 import { FormProvider, UseFormReturn, useFieldArray } from "react-hook-form"
 import { WorkoutType } from "@/lib/types"
-import { Button, Input, SetBuilderCard } from "../.."
-import { CardContent, CardFooter, CardHeader } from "../../Card"
-import { DatePicker } from "../../DatePicker"
 import { v4 as uuidv4 } from "uuid"
 import { STATUS } from "@/lib/constants"
+import {
+  CardContent,
+  CardFooter,
+  CardHeader,
+  Button,
+  Input,
+  SetBuilderCard,
+  DatePicker,
+} from "@/components"
 
 type Props = {
   form: UseFormReturn<WorkoutType, any, undefined>
