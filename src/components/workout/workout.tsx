@@ -117,6 +117,7 @@ export function Workout({ workout }: Props) {
             <Input
               className="text-xl text-slate-800 font-semibold bg-slate-200"
               {...register("name")}
+              placeholder="Workout Name"
             />
             <DatePicker date={userDate} setDate={handleSetUserDate} required />
           </CardHeader>
