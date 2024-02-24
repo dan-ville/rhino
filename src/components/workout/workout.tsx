@@ -1,22 +1,22 @@
 "use client"
 import { useParams, useRouter } from "next/navigation"
 import { useWorkoutsDB } from "@/lib/hooks"
-import { SetBuilderCard } from "../ui/setBuilderCard"
+import { SetBuilderCard } from "../ui/SetBuilderCard"
 import { useEffect, useState } from "react"
-import { Button } from "../ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
+import { Button } from "../ui/Button"
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/Card"
 import {
   useForm,
   FormProvider,
   useFieldArray,
   SubmitHandler,
 } from "react-hook-form"
-import { Input } from "../ui/input"
+import { Input } from "../ui/Input"
 import { v4 as uuidv4 } from "uuid"
 import { getWorkoutTimeOfDay } from "@/lib/utils"
 import { WorkoutType } from "@/lib/types"
 import { STATUS } from "@/lib/constants"
-import { DatePicker } from "../ui/date-picker"
+import { DatePicker } from "../ui/DatePicker"
 
 type Props = {
   workout?: WorkoutType

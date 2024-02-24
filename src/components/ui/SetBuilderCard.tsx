@@ -1,8 +1,8 @@
 "use client"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Input } from "./input"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/Card"
+import { Input } from "./Input"
 import { useFieldArray, useFormContext } from "react-hook-form"
-import { Button } from "./button"
+import { Button } from "./Button"
 import { v4 as uuidv4 } from "uuid"
 import {
   Select,
@@ -10,8 +10,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./select"
-import { Label } from "./label"
+} from "./Select"
+import { Label } from "./Label"
 import { PlusCircle, MinusCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Unit } from "@/lib/types"

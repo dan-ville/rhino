@@ -1,2 +1,2 @@
-export * from "./header"
-export * from "./page"
+export * from "./Header"
+export * from "./Page"

@@ -1,9 +1,8 @@
 import Link from "next/link"
 import React from "react"
-import { buttonVariants } from "../ui/button"
+import { buttonVariants } from "../ui/Button"
 
 export function Header() {
-
   return (
     <header>
       <div className="p-6 flex justify-between items-center max-w-5xl mx-auto">

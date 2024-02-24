@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import WorkoutDisplay from "./workoutDisplay"
+import { WorkoutDisplay } from "../WorkoutDisplay"
 import { WorkoutType } from "@/lib/types"
 import {
   Select,
@@ -9,8 +9,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
-import { format } from "path"
+} from "../ui/Select"
+
 
 type Props = {
   workouts: WorkoutType[]
@@ -27,7 +27,7 @@ const getDefaultFilterValue = () => {
 }
 
 export function WorkoutGrid({ workouts }: Props) {
-  const [data, setData] = useState<WorkoutType[]>([])
+  const [filteredData, setFilteredData] = useState<WorkoutType[]>([])
   const [filterValue, setFilterValue] = useState(getDefaultFilterValue())
 
   const renderWorkout = (workout: WorkoutType) => (
